@@ -44,18 +44,14 @@ order by cus.customer_code asc,total_pay asc;
 
 
 -- task 6;
-
-select s.service_code,s.service_name,s.service_rent_fee,st.service_type_name from services s left join service_type st 
-on s.service_type_code = st.service_type_code
-left join contracts ct on s.service_code = ct.service_code
-where s.service_code not in 
-(select ct.service_code from contracts where year(ct.contract_start_date)=2021 and quarter(ct.contract_start_date) in (2,3,4))
-group by s.service_code
-;
-
+select distinct ct.service_code from contracts ct where ct.service_code not in(select ct.service_code from contracts ct where ct.contract_start_date between '2021-01-01' and '2021-03-31');
 -- task 7:
 
-select  * from contracts ct where service_code not in (select service_code from contracts where year(contract_start_date)=2021) group by service_code;
+select  s.service_code,s.service_name,s.service_usable_area,
+s.service_maximum_capacity,service_rent_fee,st.service_type_name
+ from contracts ct left join services s on ct.service_code = s.service_code
+ left join service_type st on s.service_type_code = st.service_type_code
+ where s.service_code not in (select contracts.service_code from contracts where year(contracts.contract_start_date)=2021) group by s.service_code;
 
 -- task 8:
 
@@ -67,11 +63,11 @@ select customer_name from customers group by customer_name;
 
 
 -- task 9:
-select month(contract_end_date) as month,count(ct.employee_code) as so_luong_khach_hang from contracts ct inner join customers cus on ct.customer_code = cus.customer_code where year(ct.contract_end_date) =2021 group by month(ct.contract_end_date) order by month(ct.contract_end_date) asc;
-
+select month(contract_end_date) as month,count(ct.customer_code) as so_luong_khach_hang from contracts ct inner join customers cus on ct.customer_code = cus.customer_code where year(ct.contract_end_date) =2021 group by month(ct.contract_end_date) order by month(ct.contract_end_date) asc;
+-- task 10:
 select *,sum(coalesce(cd.contract_detail_quantity,0)) from contracts ct left join contract_details cd on ct.contract_code = cd.contract_code left join advance_services `as` on cd.advance_service_code = `as`.advance_service_code group by ct.contract_code;
 
--- task 10:
+-- task 11:
 select `as`.advance_service_code,`as`.advance_service_name from customers  cus
     left join contracts c
         on cus.customer_code = c.customer_code
@@ -85,7 +81,7 @@ or cus.customer_address like '%Quảng Ngãi')
 and customer_type_name = 'Diamond' group by `as`.advance_service_code;
 
 -- task 11:
-select * from contracts inner join employees e on contracts.employee_code = e.employee_code;
+-- select * from contracts inner join employees e on contracts.employee_code = e.employee_code;
 
 
 -- task 12:
@@ -113,8 +109,8 @@ select *,sum(cd.contract_detail_quantity) as number_used
     right join advance_services `as`
     on cd.advance_service_code = `as`.advance_service_code
     where (select max(cd.contract_detail_quantity) from contract_details cd)
-    group by cd.advance_service_code having number_used;
-
+    group by cd.advance_service_code having number_used = (select sum(contract_detail_quantity) as sum_quantity
+    from contract_details group by contract_detail_quantity order by sum_quantity desc limit 1);
 
 DELIMITER //
 create procedure sum_used_number()
@@ -176,8 +172,129 @@ update customers set customer_type_code = 1 where (
 
 
 -- task 18:
+select c.customer_code,c.customer_name from contracts left join customers c on contracts.customer_code = c.customer_code
+where year(contract_end_date) < 2021;
+
+
+-- task 19:
+
+update advance_services set advance_service_sprice = advance_service_sprice*2 where advance_service_code = ( select advance_services.advance_service_code from advance_services
+right join contract_details cd on advance_services.advance_service_code = cd.advance_service_code
+right join contracts c on cd.contract_code = c.contract_code
+where year(contract_end_date) = 2020 and(contract_detail_quantity > 10));
+
+-- task 20:
+
+select e.employee_code,e.employee_name,e.employee_email,e.employee_phone_number,e.employee_dob,e.employee_address
+from employees e union all select c.customer_code,c.customer_name,c.customer_email,c.customer_phone_number,c.customer_dob,customer_address from customers c;
+
+
+-- task 21:
+
+create view  v_employees as select * from employees left join contracts on employees.employee_code = contracts.employee_code where employee_address like '%Hải Châu%' and (contract_start_date ='2019-12-12');
+-- task 22:
+
+update v_employees set v_employees.employee_address = 'Liên chiểu' where v_employees.employee_code in (
+    select v_employees.employee_code from v_employees);
+
+-- task 23:
+
+DELIMITER //
+create procedure sp_delete_customer_by_id(in customer_id_input int)
+begin
+    delete from customers where customer_code = customer_id_input;
+end //
+DELIMITER //
+
+set @id_input = 1;
+call sp_delete_customer_by_id(@id_input);
+
+
+-- task 24:
+delimiter //
+create procedure add_new_contract(input_start_date varchar(10),
+                                    input_end_date varchar(10),
+                                    input_deposit double,
+                                    input_employee_code int,
+                                    input_customer_code int,
+                                    input_service_code int
+                                    )
+begin
+    DECLARE check_employee_code,check_service_code,check_customer_code int default -1;
+    If(input_employee_code is exists(select employee_code from employees))
+        then set check_employee_code = input_employee_code;
+    else set check_employee_code = -1;
+    end if;
+
+    If(input_customer_code is exists(select customer_code from customers))
+    then set check_customer_code = input_customer_code;
+    else set check_customer_code = -1;
+    end if;
+
+    If(input_service_code is exists(select service_code from services))
+    then set check_service_code = input_service_code;
+    else set check_service_code = -1;
+    end if;
+
+    If(check_employee_code >= 0 and check_customer_code >= 0 and check_service_code >= 0)
+        then insert into contracts
+            (
+            contract_start_date,
+            contract_end_date,
+            contract_deposit,
+            employee_code,
+            customer_code,
+            service_code
+            )
+            value
+            (input_start_date,
+            input_end_date,
+            input_deposit,
+            input_employee_code,
+            input_customer_code,
+            input_service_code);
+        else select 'NO RECORD CREATE';
+        end if;
+end//
+delimiter //
+
+
+-- task 25:
+DELIMITER //
+create trigger tr_delete_contract after delete
+    on contracts for each row
+    select count(contract_code) from contracts;
+DELIMITER //
+
+
+-- task 26:
+
+DELIMITER //
+create trigger tr_update_contract before update
+    on contracts for each row
+    if ((NEW.contract_end_date - contract_start_date) < 2) then
+        signal sqlstate '45000' set message_text = 'Wrong format';
+    else set OLD.contract_end_date = NEW.contract_end_date;
+    end if;
+DELIMITER //
 
 
 
+-- task 27:
 
+DELIMITER //
+create function func_count_service()
+returns int(5)
+begin
+    select sum(s.service_rent_fee+coalesce(advance_service_sprice*contract_detail_quantity,0)) as total_service
+        from contracts
+        left join contract_details cd
+        on contracts.contract_code = cd.contract_code
+        left join advance_services `as`
+        on cd.advance_service_code = `as`.advance_service_code
+        left join services s
+        on contracts.service_code = s.service_code
+        group by contracts.service_code having total_service > 2000000;
+end //
+DELIMITER //
 

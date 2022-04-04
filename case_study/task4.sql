@@ -1,0 +1,2 @@
+use case_study;
+select c.customer_code,c.customer_name,count(con.contract_code) as booking from customers c inner join contracts con on c.customer_code = con.customer_code inner join customer_type ct on c.customer_type_code = ct.customer_type_code where ct.customer_type_name = 'Diamond' group by c.customer_name order by booking asc;

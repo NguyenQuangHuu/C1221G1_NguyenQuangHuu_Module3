@@ -1,0 +1,2 @@
+use case_study;
+select c.customer_code,c.customer_name,c.customer_dob,c.customer_address,datediff(curdate(),c.customer_dob)/365 as age from customers c where (datediff(curdate(),c.customer_dob)/365 between 18 and 50) and (customer_address like '%Đà Nẵng' or customer_address like '%Quảng Trị');
