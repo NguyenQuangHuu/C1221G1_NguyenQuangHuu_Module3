@@ -1,0 +1,65 @@
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+}
+header{
+    background-color: black;
+}
+h1{
+    color: whitesmoke;
+    font-size: 50px;
+    padding: 20px 20px;
+}
+nav{
+    width: 100%;
+    display: block;
+    height: 50px;
+    padding : 0px 16px;
+    line-height: 36px;
+}
+
+li{
+    float:left;
+    list-style: none;
+    padding-left: 6px;
+    font-size:20px;
+    margin:8px 0px;
+}
+section{
+    width: 100%;
+    background-color: lightgray;
+    height: 400px;
+    margin: 4px;
+}
+
+.h2-heading{
+    padding: 20px 20px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+article{
+    margin:20px 20px;
+    background-color: white;
+}
+
+article > h2{
+    font-size: 30px;
+    font-weight: bold;
+    padding : 4px 8px 10px 8px;
+
+}
+
+article > p {
+    padding : 10px 8px 10px 8px;
+    font-size:20px;
+}
+
+footer{
+    width: 100%;
+    background-color: black;
+    color: white;
+    height: 50px;
+    line-height: 50px;
+}
