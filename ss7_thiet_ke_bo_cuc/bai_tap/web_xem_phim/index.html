@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        @media screen and (max-width: 724px) {
+
+            [class*="col-"]{
+                width: 100%;
+            }
+            .left-side{
+                display: none;
+            }
+
+            nav{
+                display: none;
+            }
+        }
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        .col-1 {width: 8.33%;}
+        .col-2 {width: 16.66%;}
+        .col-3 {width: 25%;}
+        .col-4 {width: 33.33%;}
+        .col-5 {width: 41.66%;}
+        .col-6 {width: 50%;}
+        .col-7 {width: 58.33%;}
+        .col-8 {width: 66.66%;}
+        .col-9 {width: 75%;}
+        .col-10 {width: 83.33%;}
+        .col-11 {width: 91.66%;}
+        .col-12 {width: 100%;}
+
+
+        [class*="col-"] {
+            float: left;
+            padding: 15px;
+        }
+
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        header{
+            background-color: lightgrey;
+            border-bottom: 5px solid whitesmoke;
+        }
+
+        nav{
+            background-color: lightgrey;
+        }
+
+        nav>div{
+            margin: 8px 0;
+        }
+
+        ul{
+            list-style: none;
+            text-align: center;
+        }
+
+        li{
+            display: inline-block;
+            padding: 0 20px;
+            border-left: 1px solid red;
+        }
+
+        a{
+            text-decoration: none;
+            color:black;
+        }
+
+        li:first-child{
+            border-left: none;
+        }
+
+        footer{
+            text-align: center;
+
+        }
+
+        p{
+            text-transform: capitalize;
+            font-weight: bold;
+        }
+
+        video{
+            width: 100%;
+        }
+
+        span{
+            font-size : 16px;
+            color: grey;
+        }
+        p{
+            color: grey;
+        }
+
+        .section-height{
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<header class="row col-12">
+    <h2>Phim Hoạt Hình</h2>
+</header>
+<nav class="row">
+    <div class="col-12">
+        <ul>
+            <li><a href="#">Phim hoạt hình</a></li>
+            <li><a href="#">Phim hoat hình yêu thích</a></li>
+            <li><a href="#">Nhân vật hoạt hình</a></li>
+            <li><a href="#">Góp ý</a></li>
+        </ul>
+    </div>
+
+
+
+</nav>
+
+<div class="row col-3 left-side">
+    <div class="video">
+        <video src="#" controls>
+            <source>
+        </video>
+        <h3>
+            Welcome đến với khách sạn Nobi <span> - 5,147,528 lượt xem</span>
+        </h3>
+        <p>Channel Fun</p>
+
+    </div>
+    <div class="video">
+        <video src="#" controls>
+            <source>
+        </video>
+        <h3>
+            Suneo khổng lồ <span> - 5,147,528 lượt xem</span>
+        </h3>
+        <p>Doraemon Vietsub</p>
+    </div>
+    <div class="video">
+        <video src="#" controls>
+            <source>
+        </video>
+        <h3>
+           Còi điều khiển vật <span> - 5,147,528 lượt xem</span>
+        </h3>
+        <p>Doraemon Vietsub</p>
+    </div>
+    <div class="video">
+        <video src="#" controls>
+            <source>
+        </video>
+        <h3>
+            Chiếc máy tạo kẹo bông <span> - 5,147,528 lượt xem</span>
+        </h3>
+        <p>Doraemon Vietsub</p>
+    </div>
+</div>
+<div class="row col-9 section-height">
+    <div>
+        <video controls>
+            <source>
+        </video>
+    </div>
+    <h4>Tớ là Mari <span> - 5,147,528 lượt xem</span> </h4>
+    <p>Tác giả</p>
+    <br>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet assumenda commodi, deserunt, esse impedit libero necessitatibus obcaecati perspiciatis quasi reiciendis rem temporibus, velit vero. Adipisci debitis nobis repellat sapiente sequi?
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam beatae, corporis debitis eaque fuga ipsum iure maiores molestias non pariatur possimus quas suscipit tenetur totam vero voluptatibus! Possimus, recusandae.
+    </p>
+    <br>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet assumenda commodi, deserunt, esse impedit libero necessitatibus obcaecati perspiciatis quasi reiciendis rem temporibus, velit vero. Adipisci debitis nobis repellat sapiente sequi?
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam beatae, corporis debitis eaque fuga ipsum iure maiores molestias non pariatur possimus quas suscipit tenetur totam vero voluptatibus! Possimus, recusandae.
+    </p>
+    <br>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet assumenda commodi, deserunt, esse impedit libero necessitatibus obcaecati perspiciatis quasi reiciendis rem temporibus, velit vero. Adipisci debitis nobis repellat sapiente sequi?
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam beatae, corporis debitis eaque fuga ipsum iure maiores molestias non pariatur possimus quas suscipit tenetur totam vero voluptatibus! Possimus, recusandae.
+    </p>
+
+</div>
+<footer class="row col-12">
+    <p>Extends Copyright by Nguyễn Quang Hữu</p>
+</footer>
+</body>
+</html>
