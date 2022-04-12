@@ -145,34 +145,32 @@ group by c.employee_code having number_contracts <= 3 order by employees.employe
 -- task 16:
 
 select e.employee_code,e.employee_name from employees e where employee_code not in(
-select c.employee_code from contracts c inner join employees e on c.employee_code = e.employee_code
-where (year(c.contract_start_date) between 2019 and 2021) group by c.employee_code
+    select c.employee_code from contracts c inner join employees e on c.employee_code = e.employee_code
+    where (year(c.contract_start_date) between 2019 and 2021) group by c.employee_code
 );
 
-
 -- task 17:
-update customers set customer_type_code = 1 where (
-                                                      select c.customer_code,
-                                                             customer_name,
-                                                             ct.customer_type_code,
-                                                             sum(s.service_rent_fee +
-                                                                 coalesce(contract_detail_quantity * advance_service_sprice, 0)) as total_pay
-                                                      from contracts c
-                                                               left join services s on c.service_code = s.service_code
-                                                               left join contract_details cd on c.contract_code = cd.contract_code
-                                                               left join advance_services `as`
-                                                                         on cd.advance_service_code = `as`.advance_service_code
-                                                               left join customers c2 on c.customer_code = c2.customer_code
-                                                               left join customer_type ct on c2.customer_type_code = ct.customer_type_code
-                                                      where (year(c.contract_end_date) = 2021)
-                                                        and (ct.customer_type_name = 'Platinum')
-                                                      group by c2.customer_name
-                                                      having total_pay > 10000000
+update customers set customer_type_code = 'Diamond' where (
+      select c.customer_code,c2.customer_name,
+      ct.customer_type_code,
+      sum(s.service_rent_fee +
+      coalesce(contract_detail_quantity * advance_service_sprice, 0)) as total_pay
+      from contracts c
+      left join services s on c.service_code = s.service_code
+      left join contract_details cd on c.contract_code = cd.contract_code
+      left join advance_services `as`
+      on cd.advance_service_code = `as`.advance_service_code
+      left join customers c2 on c.customer_code = c2.customer_code
+      left join customer_type ct on c2.customer_type_code = ct.customer_type_code
+      where (year(c.contract_end_date) = 2021) and having total_pay > 10000000
+	
+	
 );
 
 
 -- task 18:
-select c.customer_code,c.customer_name from contracts left join customers c on contracts.customer_code = c.customer_code
+select c.customer_code,c.customer_name
+ from contracts left join customers c on contracts.customer_code = c.customer_code
 where year(contract_end_date) < 2021;
 
 
@@ -212,31 +210,39 @@ call sp_delete_customer_by_id(@id_input);
 
 -- task 24:
 delimiter //
-create procedure add_new_contract(input_start_date varchar(10),
-                                    input_end_date varchar(10),
+create procedure add_new_contract(input_start_date date,
+                                    input_end_date date,
                                     input_deposit double,
                                     input_employee_code int,
                                     input_customer_code int,
                                     input_service_code int
                                     )
 begin
-    DECLARE check_employee_code,check_service_code,check_customer_code int default -1;
-    If(input_employee_code is exists(select employee_code from employees))
-        then set check_employee_code = input_employee_code;
+    DECLARE check_employee_code,check_service_code,check_customer_code,check_date_create int default -1;
+    If (input_employee_code in (select employee_code from employees))
+	then set check_employee_code = input_employee_code;
     else set check_employee_code = -1;
     end if;
 
-    If(input_customer_code is exists(select customer_code from customers))
+    If(input_customer_code in (select customer_code from customers))
     then set check_customer_code = input_customer_code;
     else set check_customer_code = -1;
     end if;
 
-    If(input_service_code is exists(select service_code from services))
+    If(input_service_code in (select service_code from services))
     then set check_service_code = input_service_code;
     else set check_service_code = -1;
     end if;
-
-    If(check_employee_code >= 0 and check_customer_code >= 0 and check_service_code >= 0)
+    
+	If((input_start_date - input_end_date)<0)
+    then set check_date_create = 0;
+    else set check_date_create = -1;
+    end if;
+    
+    If(check_employee_code >= 0 
+    and check_customer_code >= 0 
+    and check_service_code >= 0
+    and check_date_create >=0)
         then insert into contracts
             (
             contract_start_date,
@@ -253,7 +259,7 @@ begin
             input_employee_code,
             input_customer_code,
             input_service_code);
-        else select 'NO RECORD CREATE';
+        else signal sqlstate '45000' set message_text = 'NO RECORD CREATE';
         end if;
 end//
 delimiter //
@@ -265,7 +271,6 @@ create trigger tr_delete_contract after delete
     on contracts for each row
     select count(contract_code) from contracts;
 DELIMITER //
-
 
 -- task 26:
 
@@ -297,4 +302,30 @@ begin
         group by contracts.service_code having total_service > 2000000;
 end //
 DELIMITER //
+
+-- task 28:
+delimiter //
+drop procedure if exists sp_3 //
+create procedure sp_3()
+begin
+declare service_result int default 0;
+declare completed int default 0;
+declare con_tro cursor for
+select services.service_code
+from services inner join contracts on services.service_code=contracts.service_code
+inner join service_type on services.service_type_code = service_type.service_type_code
+where service_type.service_type_name='room' and year(contracts.service_start_date) between '2015' and '2025';
+declare continue handler for not found set completed=1;
+open con_tro;
+get_list: loop
+fetch from con_tro into services;
+if completed =1 then
+leave get_list;
+end if ;
+delete from contracts where contracts.contract_code=service_result;
+delete from services where services.service_code=service_result;
+end loop get_list;
+close con_tro;
+end//
+
 
