@@ -16,7 +16,7 @@ public class DiscountServlet extends javax.servlet.http.HttpServlet {
 
         writer.println("<h3>Giá sau khi chiết khấu</h3>");
 
-        writer.printf("Phần trăm chiết khấu : %.3f",result);
+        writer.printf("Phần trăm chiết khấu : %.0f",result);
         writer.printf("Giá sản phẩm sau khi tính chiết khấu : %.3f",(number - result));
 
         writer.println("</html>");

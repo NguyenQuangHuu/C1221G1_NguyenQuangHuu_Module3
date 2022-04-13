@@ -2,15 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0221a72-fcdc-4283-ad76-d3388d7200db" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ss9_overview_webapp/bai_tap/discount/src/main/java/DiscountServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ss9_overview_webapp/src/main/java/ServerTimeServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/currency_converter/src/main/java/CurrencyConverterServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/src/main/java/SimpleDictionaryServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_login/src/main/java/LoginServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/module_3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/module_3.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ss10_jsp_jstl/thuc_hanh/currency_converter/src/ConverterServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ss10_jsp_jstl/thuc_hanh/currency_converter/web/converter.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ss10_jsp_jstl/thuc_hanh/simple_dictionary/src/controllers/DictionaryServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ss10_jsp_jstl/thuc_hanh/simple_dictionary/web/dictionary.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ss10_jsp_jstl/thuc_hanh/untitled/src/main/java/controllers/TestServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ss8_bootstrap/bai_tap/clone_microsoft/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ss8_bootstrap/bai_tap/clone_microsoft/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ss9_overview_webapp/bai_tap/discount/.gradle/6.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ss9_overview_webapp/bai_tap/discount/.gradle/6.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ss9_overview_webapp/bai_tap/discount/.gradle/6.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ss9_overview_webapp/bai_tap/discount/.gradle/6.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ss9_overview_webapp/bai_tap/discount/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ss9_overview_webapp/bai_tap/discount/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ss9_overview_webapp/bai_tap/discount/src/main/java/DiscountServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/ss9_overview_webapp/bai_tap/discount/src/main/java/DiscountServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/.gradle/6.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/.gradle/6.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/.gradle/6.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/.gradle/6.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/.gradle/6.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/.gradle/6.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/.gradle/6.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/.gradle/6.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/build/libs/simple_dictionary-1.0-SNAPSHOT.war" beforeDir="false" afterPath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/build/libs/simple_dictionary-1.0-SNAPSHOT.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ss9_overview_webapp/thuc_hanh/simple_dictionary/src/main/webapp/index.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +51,7 @@
       <option name="presentableId" value="Default" />
       <updated>1649582546101</updated>
       <workItem from="1649582549772" duration="1433000" />
+      <workItem from="1649757486686" duration="351000" />
     </task>
     <servers />
   </component>
