@@ -12,7 +12,7 @@ public interface IProductService extends IService {
     Product findById(Integer id);
 
 
-    void updateProduct(Integer id, Product product);
+    void updateProduct(Integer id,String name,String manufacturer,Double price,Integer quantity, Product product);
 
     void removeProduct(Product product);
 

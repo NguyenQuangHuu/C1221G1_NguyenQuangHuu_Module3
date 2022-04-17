@@ -26,7 +26,11 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public void updateProduct(Integer id, Product product) {
+    public void updateProduct(Integer id,String name,String manufacturer,Double price, Integer quantity, Product product) {
+        product.setProductName(name);
+        product.setManufacturer(manufacturer);
+        product.setProductPrice(price);
+        product.setProductQuantity(quantity);
         iProductRepository.update(id,product);
     }
 

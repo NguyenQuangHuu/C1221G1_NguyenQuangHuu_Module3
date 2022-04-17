@@ -132,13 +132,7 @@ public class ProductServlet extends HttpServlet {
             request.getRequestDispatcher("error-404.jsp");
         }
         else{
-
-            product.setManufacturer(manufacturer);
-            product.setProductName(name);
-            product.setProductPrice(price);
-            product.setProductQuantity(quantity);
-
-            this.productService.updateProduct(id,product);
+            this.productService.updateProduct(id,name,manufacturer,price,quantity,product);
             request.setAttribute("message","Updated Information success");
             request.getRequestDispatcher("product/update.jsp").forward(request,response);
         }
