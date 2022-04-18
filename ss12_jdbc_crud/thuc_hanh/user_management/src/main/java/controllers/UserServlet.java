@@ -127,9 +127,8 @@ public class UserServlet extends HttpServlet {
         this.iUserService.deleteUser(id);
         request.setAttribute("message","Delete Success");
         try {
-            request.getRequestDispatcher("user/list.jsp").forward(request,response);
-        } catch (ServletException e) {
-            e.printStackTrace();
+            response.sendRedirect("/users");
+//            request.getRequestDispatcher("user/list.jsp").forward(request,response);
         } catch (IOException e) {
             e.printStackTrace();
         }
