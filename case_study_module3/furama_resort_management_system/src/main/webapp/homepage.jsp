@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="bootstrap/datatables/css/dataTables.bootstrap4.min.css">
     <style>
         #content{
-            height: 600px;
+            min-height: 600px;
         }
     </style>
 </head>

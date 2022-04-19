@@ -88,10 +88,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal">Hủy</button>
-
-
-                    <input class="btn btn-danger" type="submit" value="Xóa">
-
+                <input class="btn btn-danger" type="submit" value="Xóa">
 
             </div>
             </form>

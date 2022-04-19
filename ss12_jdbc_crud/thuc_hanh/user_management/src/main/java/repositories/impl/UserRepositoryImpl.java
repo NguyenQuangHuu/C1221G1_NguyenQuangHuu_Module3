@@ -4,6 +4,7 @@ import models.User;
 import repositories.BaseRepository;
 import repositories.IUserRepository;
 
+import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,10 +31,13 @@ public class UserRepositoryImpl implements IUserRepository {
     public List<User> list() {
         List<User> userList = new ArrayList<>();
 
-        PreparedStatement preparedStatement = null;
+//        PreparedStatement preparedStatement = null;
+        CallableStatement callableStatement = null;
+
         try {
-            preparedStatement = this.baseRepository.getConn().prepareStatement(SELECT_ALL_USERS);
-            ResultSet resultSet = preparedStatement.executeQuery();
+//            preparedStatement = this.baseRepository.getConn().prepareStatement(SELECT_ALL_USERS);
+            callableStatement = this.baseRepository.getConn().prepareCall("call show_users");
+            ResultSet resultSet = callableStatement.executeQuery();
             User user;
             while (resultSet.next()){
                 user = new User();
@@ -47,7 +51,8 @@ public class UserRepositoryImpl implements IUserRepository {
             throwables.printStackTrace();
         }finally {
             try {
-                preparedStatement.close();
+                callableStatement.close();
+//                preparedStatement.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -58,16 +63,30 @@ public class UserRepositoryImpl implements IUserRepository {
 
     @Override
     public void removeUser(int id) {
-        PreparedStatement preparedStatement = null;
+//        PreparedStatement preparedStatement = null;
+//        try {
+//            preparedStatement = this.baseRepository.getConn().prepareStatement(DELETE_USERS_SQL);
+//            preparedStatement.setInt(1,id);
+//            preparedStatement.executeUpdate();
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }finally {
+//            try {
+//                preparedStatement.close();
+//            } catch (SQLException throwables) {
+//                throwables.printStackTrace();
+//            }
+//        }
+        CallableStatement callableStatement = null;
         try {
-            preparedStatement = this.baseRepository.getConn().prepareStatement(DELETE_USERS_SQL);
-            preparedStatement.setInt(1,id);
-            preparedStatement.executeUpdate();
+            callableStatement = this.baseRepository.getConn().prepareCall("call delete_user(?)");
+            callableStatement.setInt(1,id);
+            callableStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }finally {
             try {
-                preparedStatement.close();
+                callableStatement.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -98,10 +117,12 @@ public class UserRepositoryImpl implements IUserRepository {
     @Override
     public User findUserById(Integer id) {
         PreparedStatement preparedStatement = null;
+
         User user = new User();
         try {
             preparedStatement = this.baseRepository.getConn().prepareStatement(SELECT_USER_BY_ID);
             preparedStatement.setInt(1,id);
+
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 int idResult = resultSet.getInt("id");
@@ -195,22 +216,38 @@ public class UserRepositoryImpl implements IUserRepository {
 
     @Override
     public void edit(int id, String name, String email, String country) {
-        PreparedStatement preparedStatement = null;
+
+//        PreparedStatement preparedStatement = null;
+//        try {
+//            preparedStatement = this.baseRepository.getConn().prepareStatement(UPDATE_USERS_SQL);
+//            preparedStatement.setString(1,name);
+//            preparedStatement.setString(2,email);
+//            preparedStatement.setString(3,country);
+//            preparedStatement.setInt(4,id);
+//            preparedStatement.executeUpdate();
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }finally {
+//            try {
+//                preparedStatement.close();
+//            } catch (SQLException throwables) {
+//                throwables.printStackTrace();
+//            }
+//        }
+
+        CallableStatement callableStatement = null;
+
         try {
-            preparedStatement = this.baseRepository.getConn().prepareStatement(UPDATE_USERS_SQL);
-            preparedStatement.setString(1,name);
-            preparedStatement.setString(2,email);
-            preparedStatement.setString(3,country);
-            preparedStatement.setInt(4,id);
-            preparedStatement.executeUpdate();
+            callableStatement = this.baseRepository.getConn().prepareCall("call edit_user(?,?,?,?)");
+            callableStatement.setInt(1,id);
+            callableStatement.setString(2,name);
+            callableStatement.setString(3,email);
+            callableStatement.setString(4,country);
+            callableStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
         }
+
+
     }
 }

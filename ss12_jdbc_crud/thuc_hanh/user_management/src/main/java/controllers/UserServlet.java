@@ -175,3 +175,20 @@ public class UserServlet extends HttpServlet {
         }
     }
 }
+
+
+//create procedure ss12_jdbc_crud.show_users()
+//begin
+//    select * from ss12_jdbc_crud.user;
+//end;
+//
+//
+//create procedure ss12_jdbc_crud.edit_user(IN id_input integer)
+//begin
+//    select * from ss12_jdbc_crud.user where id = id_input;
+//end;
+//
+//create procedure ss12_jdbc_crud.delete_user(IN id_input integer)
+//begin
+//    delete from ss12_jdbc_crud.user where id = id_input;
+//end;
