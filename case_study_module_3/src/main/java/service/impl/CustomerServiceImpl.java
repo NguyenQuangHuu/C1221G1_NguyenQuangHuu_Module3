@@ -42,8 +42,8 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
-    public List<Customer> searchCustomer(String nameSearch, String addressSearch, String phoneSearch) {
-        return this.iCustomerRepository.searchCustomer(nameSearch,addressSearch,phoneSearch);
+    public List<Customer> searchCustomer(String nameSearch, Integer typeCustomerSearch, String emailSearch) {
+        return this.iCustomerRepository.searchCustomer(nameSearch,typeCustomerSearch,emailSearch);
     }
 
 

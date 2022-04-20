@@ -26,8 +26,12 @@
         <legend>Tìm kiếm khách hàng</legend>
         <input type="hidden" name="action" value="search">
         <input type="text" name="name_search" placeholder="Tên....">
-        <input type="text" name="address_search" placeholder="Địa chỉ....">
-        <input type="text" name="phone_search" placeholder="Số điện thoại....">
+        <input type="text" name="email_search" placeholder="Email....">
+        <select name="type_customer_search">
+            <c:forEach items="${customerTypes}" var="type">
+                <option value="${type.typeCode}">${type.typeName}</option>
+            </c:forEach>
+        </select>
         <input type="submit" value="Tìm kiếm">
     </fieldset>
 </form>

@@ -201,15 +201,15 @@ public class CustomerRepositoryImpl implements ICustomerRepository {
     }
 
     @Override
-    public List<Customer> searchCustomer(String nameSearch, String addressSearch, String phoneSearch) {
+    public List<Customer> searchCustomer(String nameSearch, Integer typeCustomerSearch, String emailSearch) {
         List<Customer> resultCustomer = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = this.baseRepository.getConnection()
-                    .prepareStatement("select * from customers where (customer_name like ? and customer_address like ? and customer_phone_number like ?);");
+                    .prepareStatement("select * from customers where (customer_name like ? and customer_type_code = ? and customer_email like ?);");
             preparedStatement.setString(1,'%'+nameSearch+'%');
-            preparedStatement.setString(2,'%'+addressSearch+'%');
-            preparedStatement.setString(3,'%'+phoneSearch+'%');
+            preparedStatement.setInt(2,typeCustomerSearch);
+            preparedStatement.setString(3,'%'+emailSearch+'%');
             ResultSet resultSet = preparedStatement.executeQuery();
             Customer customer;
             while (resultSet.next()){

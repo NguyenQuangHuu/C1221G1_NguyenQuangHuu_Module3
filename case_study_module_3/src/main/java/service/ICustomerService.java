@@ -18,5 +18,5 @@ public interface ICustomerService {
 
     void editCustomer(Customer customer);
 
-    List<Customer> searchCustomer(String nameSearch, String addressSearch, String phoneSearch);
+    List<Customer> searchCustomer(String nameSearch, Integer typeCustomerSearch, String emailSearch);
 }

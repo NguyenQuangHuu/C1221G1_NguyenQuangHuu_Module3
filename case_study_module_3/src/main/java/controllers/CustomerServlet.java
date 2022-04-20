@@ -98,14 +98,14 @@ public class CustomerServlet extends HttpServlet {
 
     private void searchCustomer(HttpServletRequest request, HttpServletResponse response) {
         String nameSearch = request.getParameter("name_search");
-        String addressSearch = request.getParameter("address_search");
-        String phoneSearch = request.getParameter("phone_search");
-        List<Customer> customers = this.iCustomerService.searchCustomer(nameSearch,addressSearch,phoneSearch);
+        Integer typeCustomerSearch = Integer.valueOf(request.getParameter("type_customer_search"));
+        String emailSearch = request.getParameter("email_search");
+        List<Customer> customers = this.iCustomerService.searchCustomer(nameSearch,typeCustomerSearch,emailSearch);
         request.setAttribute("customers",customers);
         List<CustomerType> customerTypes = this.iCustomerService.listCustomerType();
         request.setAttribute("customerTypes",customerTypes);
         try {
-            request.getRequestDispatcher("customer/list.jsp").forward(request,response);
+            request.getRequestDispatcher("view/customer/list.jsp").forward(request,response);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -120,7 +120,7 @@ public class CustomerServlet extends HttpServlet {
         request.setAttribute("types",customerTypes);
         request.setAttribute("customer",customer);
         try {
-            request.getRequestDispatcher("customer/edit.jsp").forward(request,response);
+            request.getRequestDispatcher("view/customer/edit.jsp").forward(request,response);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -142,7 +142,7 @@ public class CustomerServlet extends HttpServlet {
         List<CustomerType> customerTypes = this.iCustomerService.listCustomerType();
         request.setAttribute("customerType",customerTypes);
         try {
-            request.getRequestDispatcher("customer/list.jsp").forward(request,response);
+            request.getRequestDispatcher("view/customer/list.jsp").forward(request,response);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -155,6 +155,6 @@ public class CustomerServlet extends HttpServlet {
         List<CustomerType> customerTypes = this.iCustomerService.listCustomerType();
         request.setAttribute("customers",customerList);
         request.setAttribute("customerTypes",customerTypes);
-        request.getRequestDispatcher("customer/list.jsp").forward(request,response);
+        request.getRequestDispatcher("view/customer/list.jsp").forward(request,response);
     }
 }
