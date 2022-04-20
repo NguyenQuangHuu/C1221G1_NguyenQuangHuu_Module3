@@ -36,5 +36,15 @@ public class CustomerServiceImpl implements ICustomerService {
         this.iCustomerRepository.removeCustomer(id);
     }
 
+    @Override
+    public void editCustomer(Customer customer) {
+        this.iCustomerRepository.editCustomer(customer);
+    }
+
+    @Override
+    public List<Customer> searchCustomer(String nameSearch, String addressSearch, String phoneSearch) {
+        return this.iCustomerRepository.searchCustomer(nameSearch,addressSearch,phoneSearch);
+    }
+
 
 }
