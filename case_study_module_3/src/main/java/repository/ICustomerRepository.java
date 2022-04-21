@@ -8,8 +8,6 @@ import java.util.List;
 public interface ICustomerRepository extends ICrudRepository<Customer>{
     List<Customer> showListCustomer();
 
-    List<CustomerType> showListCustomerType();
-
     void createCustomer(Customer customer);
 
     Customer findCustomerById(int id);

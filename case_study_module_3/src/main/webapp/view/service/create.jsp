@@ -10,30 +10,57 @@
 <html>
 <head>
     <title>Tạo mới dịch vụ</title>
+    <style>
+        span{
+            color:red;
+        }
+    </style>
 </head>
 <body>
 <a href="/services">Quay lại danh sách dịch vụ</a>
 <form method="post">
     <fieldset>
         <legend>Thêm mới dịch vụ</legend>
+        <input type="text" name="code" placeholder="Mã dịch vụ">
+        <span>${error.get("code")}</span>
+        <br>
         <input type="text" name="name" placeholder="Tên dịch vụ">
+        <span>${error.get("name")}</span>
+        <br>
         <input type="text" name="area" placeholder="Diện tích sử dụng">
+        <span>${error.get("area")}</span>
+        <br>
         <input type="text" name="fee" placeholder="Chi phí thuê">
+        <span>${error.get("fee")}</span>
+        <br>
         <input type="text" name="maximum" placeholder="Số lượng khách tối đa">
-        <input type="text" name="roomType" placeholder="Tiêu chuẩn phòng">
+        <span>${error.get("maximum")}</span>
+        <br>
+        <select name="roomType">
+            <option value="vip">Phòng Vip</option>
+            <option value="normal">Phòng Thường</option>
+        </select>
+        <br>
         <input type="text" name="convenience" placeholder="Tiện nghi khác">
+        <br>
         <input type="text" name="poolArea" placeholder="Diện tích hồ bơi">
+        <span>${error.get("poolArea")}</span>
+        <br>
         <input type="text" name="floor" placeholder="Số tầng">
+        <span>${error.get("floor")}</span>
+        <br>
         <select name="renType">
             <c:forEach items="${rentTypes}" var="rent">
                 <option value="${rent.rentTypeCode}">${rent.rentTypeName}</option>
             </c:forEach>
         </select>
+        <br>
         <select name="serviceType">
             <c:forEach items="${serviceTypes}" var="service">
                 <option value="${service.serviceTypeCode}">${service.serviceTypeName}</option>
             </c:forEach>
         </select>
+        <br>
         <input type="submit" value="Tạo mới">
     </fieldset>
 </form>

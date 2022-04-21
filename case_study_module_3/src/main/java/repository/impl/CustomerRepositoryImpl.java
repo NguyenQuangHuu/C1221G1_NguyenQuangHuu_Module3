@@ -16,10 +16,10 @@ public class CustomerRepositoryImpl implements ICustomerRepository {
     private String LIST_CUSTOMER_QUERY = "" +
             "select * from customers;";
 
-    private String INSERT_CUSTOMER = "INSERT INTO customers(customer_name,customer_dob," +
+    private String INSERT_CUSTOMER = "INSERT INTO customers(customer_code,customer_name,customer_dob," +
             "customer_gender,customer_passport_id," +
             "customer_phone_number,customer_email,customer_address," +
-            "customer_type_code) value(?,?,?,?,?,?,?,?);";
+            "customer_type_code) value(?,?,?,?,?,?,?,?,?);";
 
 
     @Override
@@ -33,7 +33,8 @@ public class CustomerRepositoryImpl implements ICustomerRepository {
             Customer customer;
             while (resultSet.next()){
                 customer = new Customer();
-                customer.setId(resultSet.getInt("customer_code"));
+                customer.setId(resultSet.getInt("customer_id"));
+                customer.setCode(resultSet.getString("customer_code"));
                 customer.setName(resultSet.getString("customer_name"));
                 customer.setDayOfBirth(String.valueOf(resultSet.getDate("customer_dob")));
                 customer.setGender(resultSet.getInt("customer_gender"));
@@ -56,46 +57,22 @@ public class CustomerRepositoryImpl implements ICustomerRepository {
         return customers;
     }
 
-    @Override
-    public List<CustomerType> showListCustomerType() {
-        List<CustomerType> customerTypes = new ArrayList<>();
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = this.baseRepository.getConnection()
-                    .prepareStatement("select * from customer_type;");
-            ResultSet resultSet = preparedStatement.executeQuery();
-            CustomerType customerType;
-            while (resultSet.next()){
-                customerType = new CustomerType();
-                customerType.setTypeCode(resultSet.getInt("customer_type_code"));
-                customerType.setTypeName(resultSet.getString("customer_type_name"));
-                customerTypes.add(customerType);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-        return customerTypes;
-    }
+
 
     @Override
     public void createCustomer(Customer customer) {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = this.baseRepository.getConnection().prepareStatement(INSERT_CUSTOMER);
-            preparedStatement.setString(1,customer.getName());
-            preparedStatement.setString(2,customer.getDayOfBirth());
-            preparedStatement.setInt(3,customer.getGender());
-            preparedStatement.setString(4,customer.getPassport());
-            preparedStatement.setString(5,customer.getPhone());
-            preparedStatement.setString(6,customer.getEmail());
-            preparedStatement.setString(7,customer.getAddress());
-            preparedStatement.setInt(8,customer.getTypeCode());
+            preparedStatement.setString(1,customer.getCode());
+            preparedStatement.setString(2,customer.getName());
+            preparedStatement.setString(3,customer.getDayOfBirth());
+            preparedStatement.setInt(4,customer.getGender());
+            preparedStatement.setString(5,customer.getPassport());
+            preparedStatement.setString(6,customer.getPhone());
+            preparedStatement.setString(7,customer.getEmail());
+            preparedStatement.setString(8,customer.getAddress());
+            preparedStatement.setInt(9,customer.getTypeCode());
             preparedStatement.executeUpdate();
 
         } catch (SQLException throwables) {
@@ -116,13 +93,14 @@ public class CustomerRepositoryImpl implements ICustomerRepository {
         Customer customer = null;
         try {
             preparedStatement = this.baseRepository.getConnection()
-                    .prepareStatement("select * from customers where customer_code = ?;");
+                    .prepareStatement("select * from customers where customer_id = ?;");
             preparedStatement.setInt(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
                 customer = new Customer();
-                customer.setId(resultSet.getInt("customer_code"));
+                customer.setId(resultSet.getInt("customer_id"));
+                customer.setCode(resultSet.getString("customer_code"));
                 customer.setName(resultSet.getString("customer_name"));
                 customer.setDayOfBirth(String.valueOf(resultSet.getDate("customer_dob")));
                 customer.setGender(resultSet.getInt("customer_gender"));
@@ -149,7 +127,7 @@ public class CustomerRepositoryImpl implements ICustomerRepository {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = this.baseRepository.getConnection()
-                    .prepareStatement("delete from customers where customer_code = ?;");
+                    .prepareStatement("delete from customers where customer_id = ?;");
             preparedStatement.setInt(1,id);
             preparedStatement.executeUpdate();
 
@@ -169,23 +147,24 @@ public class CustomerRepositoryImpl implements ICustomerRepository {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = this.baseRepository.getConnection().prepareStatement("" +
-                    "update customers set customer_name = ?," +
+                    "update customers set customer_code=?,customer_name = ?," +
                     "customer_dob = ?," +
                     "customer_gender = ?," +
                     "customer_passport_id = ?," +
                     "customer_phone_number = ?," +
                     "customer_email = ?," +
                     "customer_address = ?," +
-                    "customer_type_code=? where customer_code = ?");
-            preparedStatement.setString(1,customer.getName());
-            preparedStatement.setString(2,customer.getDayOfBirth());
-            preparedStatement.setInt(3,customer.getGender());
-            preparedStatement.setString(4,customer.getPassport());
-            preparedStatement.setString(5,customer.getPhone());
-            preparedStatement.setString(6,customer.getEmail());
-            preparedStatement.setString(7,customer.getAddress());
-            preparedStatement.setInt(8,customer.getTypeCode());
-            preparedStatement.setInt(9,customer.getId());
+                    "customer_type_code=? where customer_id = ?");
+            preparedStatement.setString(1,customer.getCode());
+            preparedStatement.setString(2,customer.getName());
+            preparedStatement.setString(3,customer.getDayOfBirth());
+            preparedStatement.setInt(4,customer.getGender());
+            preparedStatement.setString(5,customer.getPassport());
+            preparedStatement.setString(6,customer.getPhone());
+            preparedStatement.setString(7,customer.getEmail());
+            preparedStatement.setString(8,customer.getAddress());
+            preparedStatement.setInt(9,customer.getTypeCode());
+            preparedStatement.setInt(10,customer.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

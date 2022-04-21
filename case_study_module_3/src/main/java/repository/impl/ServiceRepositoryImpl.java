@@ -25,7 +25,8 @@ public class ServiceRepositoryImpl implements IServiceRepository {
             Service service;
             while (resultSet.next()) {
                 service = new Service();
-                service.setId(resultSet.getInt("service_code"));
+                service.setId(resultSet.getInt("service_id"));
+                service.setCode(resultSet.getString("service_code"));
                 service.setName(resultSet.getString("service_name"));
                 service.setArea(resultSet.getDouble("service_usable_area"));
                 service.setFee(resultSet.getDouble("service_rent_fee"));
@@ -51,81 +52,32 @@ public class ServiceRepositoryImpl implements IServiceRepository {
         return services;
     }
 
-    @Override
-    public List<ServiceType> getServiceTypes() {
 
-        List<ServiceType> types = new ArrayList<>();
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = this.baseRepository.getConnection().prepareStatement("select * from service_type;");
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-            ServiceType serviceType;
-            while (resultSet.next()) {
-                serviceType = new ServiceType();
-                serviceType.setServiceTypeCode(resultSet.getInt("service_type_code"));
-                serviceType.setServiceTypeName(resultSet.getString("service_type_name"));
-                types.add(serviceType);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-        return types;
-    }
 
-    @Override
-    public List<RentType> getRentTypes() {
-        List<RentType> rentTypes = new ArrayList<>();
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = this.baseRepository.getConnection().prepareStatement("select * from rent_type;");
-            ResultSet resultSet = preparedStatement.executeQuery();
-            RentType rentType;
-            while (resultSet.next()) {
-                rentType = new RentType();
-                rentType.setRentTypeCode(resultSet.getInt("rent_type_code"));
-                rentType.setRentTypeName(resultSet.getString("rent_type_name"));
-                rentTypes.add(rentType);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-        return rentTypes;
-    }
 
     @Override
     public void addService(Service service) {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = this.baseRepository.getConnection().prepareStatement("" +
-                    "insert into services(service_name,service_usable_area," +
+                    "insert into services(service_code,service_name,service_usable_area," +
                     "service_rent_fee,service_maximum_capacity," +
                     "service_room_type,service_advance," +
                     "service_swimming_pool_area,service_floor,rent_type_code,service_type_code)" +
-                    "value (?,?,?,?,?,?,?,?,?,?)");
+                    "value (?,?,?,?,?,?,?,?,?,?,?)");
 
-            preparedStatement.setString(1, service.getName());
-            preparedStatement.setDouble(2, service.getArea());
-            preparedStatement.setDouble(3, service.getFee());
-            preparedStatement.setInt(4, service.getMaximum());
-            preparedStatement.setString(5, service.getRoomType());
-            preparedStatement.setString(6, service.getConvenience());
-            preparedStatement.setDouble(7, service.getPoolArea());
-            preparedStatement.setInt(8, service.getFloor());
-            preparedStatement.setInt(9, service.getRentTypeCode());
-            preparedStatement.setInt(10, service.getServiceTypeCode());
+            preparedStatement.setString(1, service.getCode());
+            preparedStatement.setString(2, service.getName());
+            preparedStatement.setDouble(3, service.getArea());
+            preparedStatement.setDouble(4, service.getFee());
+            preparedStatement.setInt(5, service.getMaximum());
+            preparedStatement.setString(6, service.getRoomType());
+            preparedStatement.setString(7, service.getConvenience());
+            preparedStatement.setDouble(8, service.getPoolArea());
+            preparedStatement.setInt(9, service.getFloor());
+            preparedStatement.setInt(10, service.getRentTypeCode());
+            preparedStatement.setInt(11, service.getServiceTypeCode());
             preparedStatement.executeUpdate();
 
         } catch (SQLException throwables) {

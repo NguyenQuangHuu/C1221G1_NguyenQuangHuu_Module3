@@ -23,8 +23,12 @@
     <fieldset>
         <legend>Thông tin khách hàng cần chỉnh sửa</legend>
         <input type="text" name="id" hidden value="${customer.id}">
+        <input type="text" name="code"  value="${customer.code}">
+        <p>${error.get("code")}</p><br>
         <input type="text" name="name" placeholder="Tên khách hàng" value="${customer.name}">
+        <p>${error.get("name")}</p><br>
         <input type="date" name="dob" placeholder="Ngày sinh" value="${customer.dayOfBirth}">
+        <p>${error.get("dayOfBirth")}</p><br>
         <select name="gender" >
             <c:if test="${customer.gender == 0}">
                 <option value="0">Nữ</option>
@@ -36,8 +40,11 @@
             </c:if>
         </select>
         <input type="text" name="passport" placeholder="Chứng minh thư" value="${customer.passport}">
+        <p>${error.get("passport")}</p><br>
         <input type="text" name="phone" placeholder="Số điện thoại" value="${customer.phone}">
+        <p>${error.get("phone")}</p><br>
         <input type="text" name="email" placeholder="Email" value="${customer.email}">
+        <p>${error.get("email")}</p><br>
         <input type="text" name="address" placeholder="Địa chỉ" value="${customer.address}">
         <select name="type_code">
             <c:forEach items="${types}" var="type">

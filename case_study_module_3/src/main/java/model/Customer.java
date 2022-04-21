@@ -2,6 +2,7 @@ package model;
 
 public class Customer {
     private Integer id;
+    private String code;
     private String name;
     private String dayOfBirth;
     private Integer gender;
@@ -14,8 +15,9 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Integer id, String name, String dayOfBirth, Integer gender, String passport, String phone, String email, String address, Integer typeCode) {
+    public Customer(Integer id, String code, String name, String dayOfBirth, Integer gender, String passport, String phone, String email, String address, Integer typeCode) {
         this.id = id;
+        this.code = code;
         this.name = name;
         this.dayOfBirth = dayOfBirth;
         this.gender = gender;
@@ -24,6 +26,14 @@ public class Customer {
         this.email = email;
         this.address = address;
         this.typeCode = typeCode;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Integer getId() {
@@ -102,6 +112,7 @@ public class Customer {
     public String toString() {
         return "Customer{" +
                 "id=" + id +
+                ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", dayOfBirth='" + dayOfBirth + '\'' +
                 ", gender=" + gender +

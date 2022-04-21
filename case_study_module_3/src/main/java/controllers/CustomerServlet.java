@@ -2,8 +2,10 @@ package controllers;
 
 import model.Customer;
 import model.CustomerType;
-import service.ICustomerService;
-import service.impl.CustomerServiceImpl;
+import service.icustomer.ICustomerService;
+import service.icustomer.ICustomerTypeService;
+import service.impl.customer.CustomerServiceImpl;
+import service.impl.customer.CustomerTypeServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,10 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "CustomerServlet",urlPatterns = "/customer")
 public class CustomerServlet extends HttpServlet {
     private ICustomerService iCustomerService = new CustomerServiceImpl();
+    private ICustomerTypeService customerTypeService = new CustomerTypeServiceImpl();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
@@ -27,13 +31,12 @@ public class CustomerServlet extends HttpServlet {
                 editCustomer(request,response);
                 break;
             default:
-                System.out.println(action);
-                listCustomer(request,response);
                 break;
         }
     }
 
     private void editCustomer(HttpServletRequest request, HttpServletResponse response) {
+        String code = request.getParameter("code");
         String name = request.getParameter("name");
         String dayOfBirth = request.getParameter("dob");
         Integer gender = Integer.parseInt(request.getParameter("gender"));
@@ -43,19 +46,38 @@ public class CustomerServlet extends HttpServlet {
         String address =request.getParameter("address");
         Integer customerTypeCode = Integer.parseInt(request.getParameter("type_code"));
         Integer id = Integer.valueOf(request.getParameter("id"));
-        Customer customer = new Customer(id,name,dayOfBirth,gender,passport,phone,email,address,customerTypeCode);
-        this.iCustomerService.editCustomer(customer);
-        request.setAttribute("message","Chỉnh sửa thành công");
-        try {
-            request.getRequestDispatcher("view/customer/edit.jsp").forward(request,response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        Customer customer = new Customer(id,code,name,dayOfBirth,gender,passport,phone,email,address,customerTypeCode);
+
+        Map<String,String> validate = this.iCustomerService.editCustomer(customer);
+        if(validate.isEmpty()){
+
+            request.setAttribute("message","Chỉnh sửa thành công");
+            try {
+                request.getRequestDispatcher("view/customer/edit.jsp").forward(request,response);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else{
+            List<CustomerType> customerTypes = this.customerTypeService.listCustomerType();
+            request.setAttribute("customerType",customerTypes);
+
+            request.setAttribute("error",validate);
+            try {
+                request.getRequestDispatcher("view/customer/edit.jsp").forward(request,response);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     private void createCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String code = request.getParameter("code");
         String name = request.getParameter("name");
         String dayOfBirth = request.getParameter("dob");
         Integer gender = Integer.parseInt(request.getParameter("gender"));
@@ -65,10 +87,18 @@ public class CustomerServlet extends HttpServlet {
         String address =request.getParameter("address");
         Integer customerTypeCode = Integer.parseInt(request.getParameter("type_code"));
         Integer id = null;
-        Customer customer = new Customer(id,name,dayOfBirth,gender,passport,phone,email,address,customerTypeCode);
-        this.iCustomerService.createCustomer(customer);
-        request.setAttribute("message","Tạo mới thành công");
-        request.getRequestDispatcher("view/customer/list.jsp").forward(request,response);
+        Customer customer = new Customer(id,code,name,dayOfBirth,gender,passport,phone,email,address,customerTypeCode);
+        Map<String, String> validate = this.iCustomerService.createCustomer(customer);
+        if(validate.isEmpty()){
+            request.setAttribute("message","Tạo mới thành công");
+            request.getRequestDispatcher("view/customer/create.jsp").forward(request,response);
+        }else{
+            request.setAttribute("error",validate);
+            List<CustomerType> customerTypes = this.customerTypeService.listCustomerType();
+            request.setAttribute("customerType",customerTypes);
+            request.getRequestDispatcher("view/customer/create.jsp").forward(request,response);
+        }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -102,7 +132,7 @@ public class CustomerServlet extends HttpServlet {
         String emailSearch = request.getParameter("email_search");
         List<Customer> customers = this.iCustomerService.searchCustomer(nameSearch,typeCustomerSearch,emailSearch);
         request.setAttribute("customers",customers);
-        List<CustomerType> customerTypes = this.iCustomerService.listCustomerType();
+        List<CustomerType> customerTypes = this.customerTypeService.listCustomerType();
         request.setAttribute("customerTypes",customerTypes);
         try {
             request.getRequestDispatcher("view/customer/list.jsp").forward(request,response);
@@ -115,7 +145,7 @@ public class CustomerServlet extends HttpServlet {
 
     private void editCustomerForm(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        List<CustomerType> customerTypes = this.iCustomerService.listCustomerType();
+        List<CustomerType> customerTypes = this.customerTypeService.listCustomerType();
         Customer customer = this.iCustomerService.findCustomerById(id);
         request.setAttribute("types",customerTypes);
         request.setAttribute("customer",customer);
@@ -139,10 +169,10 @@ public class CustomerServlet extends HttpServlet {
     }
 
     private void createCustomerForm(HttpServletRequest request, HttpServletResponse response) {
-        List<CustomerType> customerTypes = this.iCustomerService.listCustomerType();
+        List<CustomerType> customerTypes = this.customerTypeService.listCustomerType();
         request.setAttribute("customerType",customerTypes);
         try {
-            request.getRequestDispatcher("view/customer/list.jsp").forward(request,response);
+            request.getRequestDispatcher("view/customer/create.jsp").forward(request,response);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -152,7 +182,7 @@ public class CustomerServlet extends HttpServlet {
 
     private void listCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Customer> customerList = this.iCustomerService.listCustomer();
-        List<CustomerType> customerTypes = this.iCustomerService.listCustomerType();
+        List<CustomerType> customerTypes = this.customerTypeService.listCustomerType();
         request.setAttribute("customers",customerList);
         request.setAttribute("customerTypes",customerTypes);
         request.getRequestDispatcher("view/customer/list.jsp").forward(request,response);
