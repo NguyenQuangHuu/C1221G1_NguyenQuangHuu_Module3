@@ -110,9 +110,36 @@ public class EmployeeServlet extends HttpServlet {
             case "edit":
                 editEmployeeForm(request,response);
                 break;
+            case "delete":
+                deleteEmployee(request,response);
+                break;
             default:
                 listEmployee(request,response);
                 break;
+        }
+    }
+
+    private void deleteEmployee(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Employee employee = this.service.getEmployeeById(id);
+        if(employee != null){
+            this.service.deleteEmployee(id);
+            request.setAttribute("message","Xóa thành công");
+            try {
+                response.sendRedirect("/employee");
+//                request.getRequestDispatcher("/view/employee/list.jsp").forward(request,response);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            request.setAttribute("message","Không tồn tại nhân viên này");
+            try {
+                request.getRequestDispatcher("/view/employee/list.jsp").forward(request,response);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

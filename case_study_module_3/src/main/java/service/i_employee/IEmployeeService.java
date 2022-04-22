@@ -12,4 +12,6 @@ public interface IEmployeeService {
     Employee getEmployeeById(int id);
 
     void editEmployee(Employee employee);
+
+    void deleteEmployee(int id);
 }

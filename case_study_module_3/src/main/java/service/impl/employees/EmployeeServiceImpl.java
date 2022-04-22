@@ -29,4 +29,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
     public void editEmployee(Employee employee) {
         this.repository.editEmployee(employee);
     }
+
+    @Override
+    public void deleteEmployee(int id) {
+        this.repository.deleteEmployee(id);
+    }
 }

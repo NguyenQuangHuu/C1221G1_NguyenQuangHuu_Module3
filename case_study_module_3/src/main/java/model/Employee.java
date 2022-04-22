@@ -13,12 +13,11 @@ public class Employee {
     private Integer positionCode;
     private Integer levelCode;
     private Integer departmentCode;
-    private String username;
 
     public Employee() {
     }
 
-    public Employee(Integer id, String name, String dayOfBirth, Integer gender, String passport, Double salary, String phone, String email, String address, Integer positionCode, Integer levelCode, Integer departmentCode, String username) {
+    public Employee(Integer id, String name, String dayOfBirth, Integer gender, String passport, Double salary, String phone, String email, String address, Integer positionCode, Integer levelCode, Integer departmentCode) {
         this.id = id;
         this.name = name;
         this.dayOfBirth = dayOfBirth;
@@ -31,7 +30,7 @@ public class Employee {
         this.positionCode = positionCode;
         this.levelCode = levelCode;
         this.departmentCode = departmentCode;
-        this.username = username;
+
     }
 
     public Integer getId() {
@@ -130,13 +129,7 @@ public class Employee {
         this.departmentCode = departmentCode;
     }
 
-    public String getUsername() {
-        return username;
-    }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     @Override
     public String toString() {
@@ -152,8 +145,7 @@ public class Employee {
                 ", address='" + address + '\'' +
                 ", positionCode=" + positionCode +
                 ", levelCode=" + levelCode +
-                ", departmentCode=" + departmentCode +
-                ", username='" + username + '\'' +
+                ", departmentCode=" + departmentCode+
                 '}';
     }
 }

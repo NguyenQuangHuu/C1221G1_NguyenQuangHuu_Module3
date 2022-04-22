@@ -4,8 +4,8 @@ import model.Customer;
 import model.CustomerType;
 import service.icustomer.ICustomerService;
 import service.icustomer.ICustomerTypeService;
-import service.impl.customer.CustomerServiceImpl;
-import service.impl.customer.CustomerTypeServiceImpl;
+import service.icustomer.customer.CustomerServiceImpl;
+import service.icustomer.customer.CustomerTypeServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

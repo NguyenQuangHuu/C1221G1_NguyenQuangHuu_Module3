@@ -61,7 +61,7 @@ public class EmployeeRepositoryImpl implements IEmployeeRepository {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = this.baseRepository.getConnection().prepareStatement(
-                    "select * from employees"
+                    "select * from employees;"
             );
             ResultSet resultSet =  preparedStatement.executeQuery();
             Employee employee;
@@ -141,7 +141,7 @@ public class EmployeeRepositoryImpl implements IEmployeeRepository {
                             "employee_address = ?," +
                             "position_code = ?," +
                             "level_code = ?,"+
-                            "department_code = ? where employee_code = ?) value (?,?,?,?,?,?,?,?,?,?,?,?);"
+                            "department_code = ? where employee_code = ?;"
             );
 
             preparedStatement.setString(1,employee.getName());
@@ -166,6 +166,18 @@ public class EmployeeRepositoryImpl implements IEmployeeRepository {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    public void deleteEmployee(int id) {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = this.baseRepository.getConnection().prepareStatement("delete from employees where employee_code = ?");
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 }

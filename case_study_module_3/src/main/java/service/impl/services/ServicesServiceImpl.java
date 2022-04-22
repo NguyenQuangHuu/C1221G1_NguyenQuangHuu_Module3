@@ -24,7 +24,7 @@ public class ServicesServiceImpl implements IServicesService {
         Map<String,String> validateCreate = new HashMap<>();
         if("".equals(service.getCode())){
             validateCreate.put("code","Không được để trống mã dịch vụ");
-        }else if(!this.regularExpression.codeCustomerCheck(service.getCode())){
+        }else if(!this.regularExpression.serviceCode(service.getCode())){
             validateCreate.put("code","Sai định dạng. Mã dịch vụ có định dạng DV-XXXX , X là số");
         }
 

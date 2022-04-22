@@ -193,7 +193,8 @@ public class CustomerRepositoryImpl implements ICustomerRepository {
             Customer customer;
             while (resultSet.next()){
                 customer = new Customer();
-                customer.setId(resultSet.getInt("customer_code"));
+                customer.setId(resultSet.getInt("customer_id"));
+                customer.setCode(resultSet.getString("customer_code"));
                 customer.setName(resultSet.getString("customer_name"));
                 customer.setDayOfBirth(resultSet.getString("customer_dob"));
                 customer.setGender(resultSet.getInt("customer_gender"));

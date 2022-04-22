@@ -43,6 +43,7 @@ public class ServiceServlet extends HttpServlet {
 
     private void createService(HttpServletRequest request, HttpServletResponse response) {
         String code = request.getParameter("code");
+
         String name = request.getParameter("name");
 
         Double area = -1.0;
