@@ -18,7 +18,7 @@
 <body>
 <a href="/services?action=create">Tạo mới dịch vụ</a>
 <br>
-<table id="tableService">
+<table id="tableService" class="table">
     <thead>
     <tr>
         <th>#</th>

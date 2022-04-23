@@ -40,19 +40,19 @@
       <div class="col-9">
         <ul class="list-unstyled d-flex justify-content-center pb-0 mb-0">
           <li class="d-inline-block w-100 col-2 px-4 py-2">
-            Home
+            <a href="#">Home</a>
           </li>
           <li class="d-inline-block w-100 col-2 px-4 py-2">
-            Employee
+            <a href="/employee">Employee</a>
           </li>
           <li class="d-inline-block w-100 col-2 px-4 py-2">
-            Customer
+            <a href="/customer">Customer</a>
           </li>
           <li class="d-inline-block w-100 col-2 px-4 py-2">
-            Service
+             <a href="/services">Service</a>
           </li>
           <li class="d-inline-block w-100 col-2 px-4 py-2">
-            Contract
+            <a href="/contract">Contract</a>
           </li>
         </ul>
       </div>

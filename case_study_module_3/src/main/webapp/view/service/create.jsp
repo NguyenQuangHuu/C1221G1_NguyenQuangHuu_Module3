@@ -15,55 +15,58 @@
             color: red;
         }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
 </head>
 <body>
 <a href="/services">Quay lại danh sách dịch vụ</a>
-<form method="post">
-    <fieldset>
+<form method="post" class="w-100 mx-4">
+    <fieldset class="w-100">
         <legend>Thêm mới dịch vụ</legend>
-        <input type="text" name="code" placeholder="Mã dịch vụ">
+        <input class="form-input" type="text" name="code" placeholder="Mã dịch vụ">
         <span>${error.get("code")}</span>
         <br>
-        <input type="text" name="name" placeholder="Tên dịch vụ">
+        <input class="form-input" type="text" name="name" placeholder="Tên dịch vụ">
         <span>${error.get("name")}</span>
         <br>
-        <input type="text" name="area" placeholder="Diện tích sử dụng">
+        <input class="form-input" type="text" name="area" placeholder="Diện tích sử dụng">
         <span>${error.get("area")}</span>
         <br>
-        <input type="text" name="fee" placeholder="Chi phí thuê">
+        <input class="form-input" type="text" name="fee" placeholder="Chi phí thuê">
         <span>${error.get("fee")}</span>
         <br>
-        <input type="text" name="maximum" placeholder="Số lượng khách tối đa">
+        <input class="form-input" type="text" name="maximum" placeholder="Số lượng khách tối đa">
         <span>${error.get("maximum")}</span>
         <br>
-        <select name="renType">
+        <select class="form-input" name="renType">
             <c:forEach items="${rentTypes}" var="rent">
                 <option value="${rent.rentTypeCode}">${rent.rentTypeName}</option>
             </c:forEach>
         </select>
         <br>
-        <select name="serviceType" id="valueService" onchange="getValue()">
+        <select  class="form-input" name="serviceType" id="valueService" onchange="getValue()">
             <c:forEach items="${serviceTypes}" var="service">
                 <option value="${service.serviceTypeCode}">${service.serviceTypeName}</option>
             </c:forEach>
         </select>
         <br>
         <div id="advanceService">
-            <input type="text" name="poolArea" placeholder="Diện tích hồ bơi">
+            <input class="form-input" type="text" name="poolArea" placeholder="Diện tích hồ bơi">
             <span>${error.get("poolArea")}</span>
             <br>
-            <select name="roomType">
+            <select class="form-input" name="roomType">
                 <option value="vip">Phòng Vip</option>
                 <option value="normal">Phòng Thường</option>
             </select>
             <br>
-            <input type="text" name="floor" placeholder="Số tầng">
+            <input class="form-input" type="text" name="floor" placeholder="Số tầng">
             <span>${error.get("floor")}</span>
             <br>
-            <input type="text" name="convenience" placeholder="Tiện nghi khác">
+            <input class="form-input" type="text" name="convenience" placeholder="Tiện nghi khác">
             <br>
         </div>
-        <input type="submit" value="Tạo mới">
+        <input class="btn btn-primary" type="submit" value="Tạo mới">
     </fieldset>
 </form>
 <script>
@@ -76,12 +79,12 @@
         switch (x) {
             case '1':
                 text += '' +
-                    '<input type="text" name="poolArea" placeholder="Diện tích hồ bơi">\n' +
+                    '<input class="form-input" type="text" name="poolArea" placeholder="Diện tích hồ bơi">\n' +
                     '            <span>${error.get("poolArea")}</span>\n' +
                     '            <br>'
             case '2':
                 text+='' +
-                    '<select name="roomType">' +
+                    '<select class="form-input" name="roomType">' +
                     '                <option value="vip">Phòng Vip</option>' +
                     '                <option value="normal">Phòng Thường</option>' +
                     '            </select>' +
@@ -91,12 +94,27 @@
                     '<br>';
             case '3':
                 text += '' +
-                    '<input type="text" name="convenience" placeholder="Tiện nghi khác">' +
+                    '<input type="text"  class="form-input" name="convenience" placeholder="Tiện nghi khác">' +
                     '<br>';
                 break;
         }
         render.innerHTML = text;
     }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
+        integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+<script>
 </body>
 </html>
