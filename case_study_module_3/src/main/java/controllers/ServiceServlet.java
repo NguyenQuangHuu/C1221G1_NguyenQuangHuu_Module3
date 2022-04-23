@@ -68,23 +68,34 @@ public class ServiceServlet extends HttpServlet {
         }catch (NumberFormatException numberFormatException){
             System.out.println(numberFormatException.getMessage());
         }
-        String roomType = request.getParameter("roomType");
-        String convenience = request.getParameter("convenience");
-        Double poolArea = -1.0;
-        try{
-            poolArea = Double.valueOf(request.getParameter("poolArea"));
 
-        }catch (NumberFormatException numberFormatException){
-            System.out.println(numberFormatException.getMessage());
-        }
-        Integer floor = -1;
-        try{
-            floor = Integer.valueOf(request.getParameter("floor"));
-        }catch (NumberFormatException numberFormatException){
-            System.out.println(numberFormatException.getMessage());
-        }
         Integer renType = Integer.valueOf(request.getParameter("renType"));
+
         Integer serviceType = Integer.valueOf(request.getParameter("serviceType"));
+
+        String roomType = null;
+
+        Double poolArea = null;
+
+        Integer floor = null;
+        try{
+            if(serviceType==1){
+                poolArea = Double.valueOf(request.getParameter("poolArea"));
+            }
+        }catch (NumberFormatException numberFormatException){
+            System.out.println(numberFormatException.getMessage());
+        }
+
+        try{
+            if(serviceType != 3){
+                floor = Integer.valueOf(request.getParameter("floor"));
+                roomType = request.getParameter("roomType");
+            }
+        }catch (NumberFormatException numberFormatException){
+            System.out.println(numberFormatException.getMessage());
+        }
+        String convenience = request.getParameter("convenience");
+
         Service service = new Service(0,code,name,area,fee,maximum,roomType,convenience,poolArea,floor,renType,serviceType);
         Map<String,String> validate = this.service.addService(service);
         if(validate.isEmpty()){

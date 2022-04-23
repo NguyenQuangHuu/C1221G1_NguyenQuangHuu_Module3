@@ -11,8 +11,8 @@
 <head>
     <title>Tạo mới dịch vụ</title>
     <style>
-        span{
-            color:red;
+        span {
+            color: red;
         }
     </style>
 </head>
@@ -36,34 +36,67 @@
         <input type="text" name="maximum" placeholder="Số lượng khách tối đa">
         <span>${error.get("maximum")}</span>
         <br>
-        <select name="roomType">
-            <option value="vip">Phòng Vip</option>
-            <option value="normal">Phòng Thường</option>
-        </select>
-        <br>
-        <input type="text" name="convenience" placeholder="Tiện nghi khác">
-        <br>
-        <input type="text" name="poolArea" placeholder="Diện tích hồ bơi">
-        <span>${error.get("poolArea")}</span>
-        <br>
-        <input type="text" name="floor" placeholder="Số tầng">
-        <span>${error.get("floor")}</span>
-        <br>
         <select name="renType">
             <c:forEach items="${rentTypes}" var="rent">
                 <option value="${rent.rentTypeCode}">${rent.rentTypeName}</option>
             </c:forEach>
         </select>
         <br>
-        <select name="serviceType">
+        <select name="serviceType" id="valueService" onchange="getValue()">
             <c:forEach items="${serviceTypes}" var="service">
                 <option value="${service.serviceTypeCode}">${service.serviceTypeName}</option>
             </c:forEach>
         </select>
         <br>
+        <div id="advanceService">
+            <input type="text" name="poolArea" placeholder="Diện tích hồ bơi">
+            <span>${error.get("poolArea")}</span>
+            <br>
+            <select name="roomType">
+                <option value="vip">Phòng Vip</option>
+                <option value="normal">Phòng Thường</option>
+            </select>
+            <br>
+            <input type="text" name="floor" placeholder="Số tầng">
+            <span>${error.get("floor")}</span>
+            <br>
+            <input type="text" name="convenience" placeholder="Tiện nghi khác">
+            <br>
+        </div>
         <input type="submit" value="Tạo mới">
     </fieldset>
 </form>
+<script>
+    function getValue() {
 
+        let x = document.getElementById("valueService").value;
+        console.log(x+'a');
+        let render = document.getElementById("advanceService");
+        let text = '';
+        switch (x) {
+            case '1':
+                text += '' +
+                    '<input type="text" name="poolArea" placeholder="Diện tích hồ bơi">\n' +
+                    '            <span>${error.get("poolArea")}</span>\n' +
+                    '            <br>'
+            case '2':
+                text+='' +
+                    '<select name="roomType">' +
+                    '                <option value="vip">Phòng Vip</option>' +
+                    '                <option value="normal">Phòng Thường</option>' +
+                    '            </select>' +
+                    '            <br>' +
+                    '            <input type="text" name="floor" placeholder="Số tầng">' +
+                    '            <span>${error.get("floor")}</span>'+
+                    '<br>';
+            case '3':
+                text += '' +
+                    '<input type="text" name="convenience" placeholder="Tiện nghi khác">' +
+                    '<br>';
+                break;
+        }
+        render.innerHTML = text;
+    }
+</script>
 </body>
 </html>

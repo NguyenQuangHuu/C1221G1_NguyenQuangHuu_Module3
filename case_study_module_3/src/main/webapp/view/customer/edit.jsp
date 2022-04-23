@@ -27,8 +27,8 @@
         <p>${error.get("code")}</p><br>
         <input type="text" name="name" placeholder="Tên khách hàng" value="${customer.name}">
         <p>${error.get("name")}</p><br>
-        <input type="date" name="dob" placeholder="Ngày sinh" value="${customer.dayOfBirth}">
-        <p>${error.get("dayOfBirth")}</p><br>
+        <input type="date" name="dob" value="${customer.dayOfBirth}" data-date-format="yyyy/mm/dd">
+
         <select name="gender" >
             <c:if test="${customer.gender == 0}">
                 <option value="0">Nữ</option>
@@ -49,9 +49,11 @@
         <select name="type_code">
             <c:forEach items="${types}" var="type">
                 <c:if test="${customer.typeCode eq type.typeCode}">
-                    <option value="" disabled hidden selected>${type.typeName}</option>
+                    <option value="${type.typeCode}" selected>${type.typeName}</option>
                 </c:if>
-                <option value="${type.typeCode}">${type.typeName}</option>
+                <c:if test="${customer.typeCode != type.typeCode}">
+                    <option value="${type.typeCode}">${type.typeName}</option>
+                </c:if>
             </c:forEach>
         </select>
         <input type="submit" value="Chỉnh sửa thông tin">

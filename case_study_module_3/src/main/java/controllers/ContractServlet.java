@@ -1,5 +1,6 @@
 package controllers;
 
+import model.Contract;
 import model.Customer;
 import model.Employee;
 import model.Service;
@@ -27,7 +28,29 @@ public class ContractServlet extends HttpServlet {
     private final ICustomerService customerService =  new CustomerServiceImpl();
     private final IServicesService service = new ServicesServiceImpl();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
+        if(action == null){
+            action="";
+        }
+        switch (action){
+            case "create":
+                createContract(request,response);
+                break;
+            default:
+                break;
+        }
+    }
 
+    private void createContract(HttpServletRequest request, HttpServletResponse response) {
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+        Double deposit = Double.parseDouble(request.getParameter("deposit"));
+        Integer employeeCode = Integer.valueOf(request.getParameter("employeeCode"));
+        Integer customerCode = Integer.valueOf(request.getParameter("customerCode"));
+        Integer serviceCode = Integer.valueOf(request.getParameter("serviceCode"));
+        Contract contract = new Contract();
+        this.contractService.newContract(contract);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

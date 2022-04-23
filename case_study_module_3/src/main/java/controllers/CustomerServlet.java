@@ -62,8 +62,8 @@ public class CustomerServlet extends HttpServlet {
 
         }else{
             List<CustomerType> customerTypes = this.customerTypeService.listCustomerType();
-            request.setAttribute("customerType",customerTypes);
-
+            request.setAttribute("customer",customer);
+            request.setAttribute("types",customerTypes);
             request.setAttribute("error",validate);
             try {
                 request.getRequestDispatcher("view/customer/edit.jsp").forward(request,response);
@@ -77,19 +77,26 @@ public class CustomerServlet extends HttpServlet {
     }
 
     private void createCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String code = request.getParameter("code");
         String name = request.getParameter("name");
         String dayOfBirth = request.getParameter("dob");
+
         Integer gender = Integer.parseInt(request.getParameter("gender"));
+
         String passport = request.getParameter("passport");
         String phone = request.getParameter("phone");
         String email =request.getParameter("email");
         String address =request.getParameter("address");
+
         Integer customerTypeCode = Integer.parseInt(request.getParameter("type_code"));
-        Integer id = null;
+        Integer id = 0;
         Customer customer = new Customer(id,code,name,dayOfBirth,gender,passport,phone,email,address,customerTypeCode);
         Map<String, String> validate = this.iCustomerService.createCustomer(customer);
         if(validate.isEmpty()){
+
+            List<CustomerType> customerTypes = this.customerTypeService.listCustomerType();
+            request.setAttribute("customerType",customerTypes);
             request.setAttribute("message","Tạo mới thành công");
             request.getRequestDispatcher("view/customer/create.jsp").forward(request,response);
         }else{

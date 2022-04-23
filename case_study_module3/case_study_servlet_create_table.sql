@@ -38,12 +38,12 @@ service_name varchar(45) not null,
 service_usable_area double ,
 service_rent_fee double ,
 service_maximum_capacity int,
-rent_type_code int not null,
-service_type_code int not null,
-service_room_type varchar(45),
+rent_type_code int,
+service_type_code int,
+service_room_type varchar(45) null,
 service_advance varchar(45) ,
-service_swimming_pool_area double,
-service_floor int,
+service_swimming_pool_area double null,
+service_floor int null,
 foreign key (service_type_code) references service_type(service_type_code),
 foreign key (rent_type_code) references rent_type(rent_type_code)
 );
@@ -102,8 +102,8 @@ foreign key (department_code) references departments(department_code)
 
 create table contracts(
 contract_code int not null auto_increment primary key,
-contract_start_date datetime not null,
-contract_end_date datetime not null,
+contract_start_date date not null,
+contract_end_date date not null,
 contract_deposit double not null,
 employee_code int not null,
 customer_id int not null,
@@ -228,6 +228,3 @@ INSERT INTO `case_study`.`contract_details` (`contract_detail_code`, `contract_c
 INSERT INTO `case_study`.`contract_details` (`contract_detail_code`, `contract_code`, `advance_service_code`, `contract_detail_quantity`) VALUES (6, 1, 3, 1);
 INSERT INTO `case_study`.`contract_details` (`contract_detail_code`, `contract_code`, `advance_service_code`, `contract_detail_quantity`) VALUES (7, 1, 2, 2);
 INSERT INTO `case_study`.`contract_details` (`contract_detail_code`, `contract_code`, `advance_service_code`, `contract_detail_quantity`) VALUES (8, 12, 2, 2);
-
-
-select * from customers

@@ -39,17 +39,23 @@ public class ServicesServiceImpl implements IServicesService {
         if(!this.regularExpression.numberTensPositive(service.getFee().toString())){
             validateCreate.put("fee","Chi phí thuê phải là số dương");
         }
-
-        if(!this.regularExpression.numberTensPositive(service.getFee().toString())){
-            validateCreate.put("poolArea","Chi phí thuê phải là số dương");
+        if(service.getServiceTypeCode()==1){
+            if(!this.regularExpression.numberTensPositive(service.getPoolArea().toString())){
+                validateCreate.put("poolArea","Diện tích hồ bơi phải là số dương");
+            }
+        }else{
+            service.setPoolArea(0.0);
         }
-
         if(!this.regularExpression.numberPositive(service.getMaximum().toString())){
             validateCreate.put("maximum","Số người tối đa phải là số nguyên dương");
         }
 
-        if(!this.regularExpression.numberPositive(service.getFloor().toString())){
-            validateCreate.put("floor","Số tầng phải là số nguyên dương");
+        if(service.getServiceTypeCode()!=3){
+            if(!this.regularExpression.numberPositive(service.getFloor().toString())){
+                validateCreate.put("floor","Số tầng phải là số nguyên dương");
+            }
+        }else{
+            service.setFloor(0);
         }
         if(validateCreate.isEmpty()){
             this.repository.addService(service);

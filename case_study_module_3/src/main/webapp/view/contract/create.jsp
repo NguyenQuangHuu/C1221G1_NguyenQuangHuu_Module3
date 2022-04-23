@@ -41,7 +41,9 @@
             <br>
             <select name="serviceCode">
                 <c:forEach items="${services}" var="service">
-                    <option value="${service.id}">${service.name}</option>
+                    <c:if test="${service.serviceTypeCode != 3}">
+                        <option value="${service.id}">${service.name}</option>
+                    </c:if>
                 </c:forEach>
             </select>
             <br>

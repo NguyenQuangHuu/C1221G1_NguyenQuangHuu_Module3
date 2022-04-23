@@ -113,9 +113,10 @@ public class CustomerServiceImpl implements ICustomerService {
 
         if(("").equals(customer.getDayOfBirth())){
             validateEdit.put("dayOfBirth","Không được để trống ngày tháng năm sinh của khách hàng");
-        }else if(!this.regularExpression.dateValidate(customer.getDayOfBirth())){
-            validateEdit.put("dayOfBirth","Sai định dạng ngày tháng");
         }
+//        else if(!this.regularExpression.dateValidate(customer.getDayOfBirth())){
+//            validateEdit.put("dayOfBirth","Sai định dạng ngày tháng");
+//        }
         if(validateEdit.isEmpty()){
             this.iCustomerRepository.editCustomer(customer);
         }
